@@ -63,30 +63,42 @@ class index extends Component {
             <div className="container">
                 <div className="row">
                     <div className="col s12 m4">
-                        <Bar
-                            data={this.state.chartData}
-                            width={25}
-                            height={250}
-                            options={{ maintainAspectRatio: false }}
-                        />
+                        <div className="card">
+                            <div className="card-content">
+                                <Bar
+                                    data={this.state.chartData}
+                                    width={25}
+                                    height={250}
+                                    options={{ maintainAspectRatio: false }}
+                                />
+                            </div>
+                        </div>
                     </div>
                     <div className="col s12 m4">
-                        <Doughnut
-                            data={this.state.chartData}
-                            width={25}
-                            height={250}
-                            options={{ maintainAspectRatio: false }}
-                        />
+                        <div className="card">
+                            <div className="card-content">
+                                <Doughnut
+                                    data={this.state.chartData}
+                                    width={25}
+                                    height={250}
+                                    options={{ maintainAspectRatio: false }}
+                                />
+                            </div>
+                        </div>
                     </div>
                     <div className="col s12 m4">
-                    <Line
-                        data={this.state.chartData}
-                        width={25}
-                        height={250}
-                        options={{
-                            maintainAspectRatio: false
-                        }}
-                        />
+                        <div className="card">
+                            <div className="card-content">
+                                <Line
+                                    data={this.state.chartData}
+                                    width={25}
+                                    height={250}
+                                    options={{
+                                        maintainAspectRatio: false
+                                    }}
+                                />
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div className="card">
