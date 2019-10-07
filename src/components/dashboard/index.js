@@ -7,28 +7,56 @@ class index extends Component {
     
     state = {
         posts : [],
-        showLoading: false
+        villageLeaders: [
+            "George Odhiambo",
+            "Elijah Akomo",
+            "Mwanika Alima",
+            "Hellen Awiti",
+            "John Ochieng",
+            "Caleb Oulu"
+        ],
+        incidentType: [
+            "Accident",
+            "Conflict",
+            "Public Misconduct",
+            "Transport/Medical Incident",
+            "Insecurity",
+            "Theft",
+            "Other"
+        ],
+        resolutionStatus: [
+            {'status':'Resolved', 'color':'new badge green'},
+            {'status':'Awaiting Assignment', 'color':'new badge red'},
+            {'status':'Being Processed', 'color':'new badge yellow darken-2'},
+        ],
+        showLoading: true
     }
 
     componentDidMount(){
-        axios.get('https://jsonplaceholder.typicode.com/posts')
+        
+        axios.get('https://data.consumerfinance.gov/resource/s6ew-h6mp.json')
             .then(res => {
                 const postList = res.data.slice(0,10)
                 this.setState({
-                    posts: postList
+                    posts: postList,
+                    showLoading: false
                 });
             });
     }
 
     render() {
-        const { posts, showLoading} = this.state; 
+        const { posts, incidentType, resolutionStatus, villageLeaders, showLoading} = this.state; 
         const postList = posts.length? (
             posts.map(post => {
+                const resolution = resolutionStatus[Math.floor(Math.random() * Math.floor(resolutionStatus.length))];
                 return (
-                    <tr key={post.id}>
-                        <td>{post.title}</td>
-                        <td>{post.title}</td>
-                        <td>{post.body}</td>
+                    <tr key={post.complaint_id}>
+                        <td>{villageLeaders[Math.floor(Math.random() * Math.floor(villageLeaders.length))]}</td>
+                        <td>{incidentType[Math.floor(Math.random() * Math.floor(incidentType.length))]}</td>
+                        <td>
+                            <p>{post.issue}. {post.sub_issue}.</p>
+                            <p className="pull-right"><span className={resolution.color} data-badge-caption={resolution.status}></span></p>
+                        </td>
                     </tr>
                 )
             })
@@ -69,11 +97,11 @@ class index extends Component {
                 <div className="card">
                     <div className="card-content">
                         <span className="card-title">Reported Cases</span>
-                        <table className="stripped">
+                        <table className="striped responsive-table">
                             <thead>
                                 <tr>
                                     <th>Village Leader</th>
-                                    <th>Issue</th>
+                                    <th>Incident Type</th>
                                     <th>Details</th>
                                 </tr>
                             </thead>
@@ -81,6 +109,7 @@ class index extends Component {
                                 {postList}
                             </tbody>
                         </table>
+                        {showLoading && <Preloader />}
                     </div>
                 </div>
                 {showLoading && <Preloader />}
