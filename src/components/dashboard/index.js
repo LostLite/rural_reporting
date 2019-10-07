@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import './index.css';
 import { connect } from 'react-redux';
 import Preloader from '../../helpers/preloader';
 
@@ -8,12 +9,13 @@ class index extends Component {
     state = {
         posts : [],
         villageLeaders: [
-            "George Odhiambo",
-            "Elijah Akomo",
-            "Mwanika Alima",
-            "Hellen Awiti",
-            "John Ochieng",
-            "Caleb Oulu"
+            {'leader':'George Odhiambo', 'county':'Kisumu > Kisumu East > Kajulu'},
+            {'leader':'Elijah Akomo', 'county':'Kisumu > Kisumu Central > Kondele'},
+            {'leader':'Mwanika Alima', 'county':'Kisumu > Kisumu West > Central Kisumu'},
+            {'leader':'Hellen Awiti', 'county':'Kisumu > Muhoroni > Ombeyi'},
+            {'leader':'John Ochieng', 'county':'Kisumu > Nyakach > North Nyakach'},
+            {'leader':'Caleb Oulu', 'county':'Kisumu > Nyando > Ahero'},
+            {'leader':'Gordon Okoth', 'county':'Kisumu > Seme > Central Seme'}
         ],
         incidentType: [
             "Accident",
@@ -25,9 +27,9 @@ class index extends Component {
             "Other"
         ],
         resolutionStatus: [
-            {'status':'Resolved', 'color':'new badge green'},
-            {'status':'Awaiting Assignment', 'color':'new badge red'},
-            {'status':'Being Processed', 'color':'new badge yellow darken-2'},
+            {'status':'Resolved', 'color':'pull-right new badge green'},
+            {'status':'Awaiting Assignment', 'color':'pull-right new badge red'},
+            {'status':'Being Processed', 'color':'pull-right new badge yellow darken-2'},
         ],
         showLoading: true
     }
@@ -49,13 +51,19 @@ class index extends Component {
         const postList = posts.length? (
             posts.map(post => {
                 const resolution = resolutionStatus[Math.floor(Math.random() * Math.floor(resolutionStatus.length))];
+                const village = villageLeaders[Math.floor(Math.random() * Math.floor(villageLeaders.length))];
                 return (
                     <tr key={post.complaint_id}>
-                        <td>{villageLeaders[Math.floor(Math.random() * Math.floor(villageLeaders.length))]}</td>
+                        <td>{village.leader}</td>
                         <td>{incidentType[Math.floor(Math.random() * Math.floor(incidentType.length))]}</td>
                         <td>
-                            <p>{post.issue}. {post.sub_issue}.</p>
-                            <p className="pull-right"><span className={resolution.color} data-badge-caption={resolution.status}></span></p>
+                            <div className="row">
+                                {post.issue}. {post.sub_issue}
+                            </div>
+                            <div className="row">
+                                <div className="col s12 m6">From: <span className="new badge grey" data-badge-caption={village.county}></span></div>
+                                <div className="col s12 m6 right-align">Status: <span className={resolution.color} data-badge-caption={resolution.status}></span></div>
+                            </div>
                         </td>
                     </tr>
                 )
@@ -112,7 +120,6 @@ class index extends Component {
                         {showLoading && <Preloader />}
                     </div>
                 </div>
-                {showLoading && <Preloader />}
                 
             </div>
         )
