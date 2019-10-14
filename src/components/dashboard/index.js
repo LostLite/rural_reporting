@@ -61,7 +61,7 @@ class index extends Component {
                                 {post.issue}. {post.sub_issue}
                             </div>
                             <div className="row">
-                                <div className="col s12 m6">From: <span className="new badge grey" data-badge-caption={village.county}></span></div>
+                                <div className="col s12 m6">From: <span className="new badge grey lighten-1" data-badge-caption={village.county}></span></div>
                                 <div className="col s12 m6 right-align">Status: <span className={resolution.color} data-badge-caption={resolution.status}></span></div>
                             </div>
                         </td>
